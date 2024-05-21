@@ -18,9 +18,9 @@
       </div>
 
       <div class="customer-info">
-        <input type="text" placeholder="Номер телефону" class="input-field" />
-        <input type="text" placeholder="Прізвище" class="input-field" />
-        <input type="text" placeholder="Ім'я" class="input-field" />
+        <input v-model="customer.phone" type="text" placeholder="Номер телефону" class="input-field" />
+        <input v-model="customer.lastName" type="text" placeholder="Прізвище" class="input-field" />
+        <input v-model="customer.firstName" type="text" placeholder="Ім'я" class="input-field" />
       </div>
 
       <div class="shipping-methods-container">
@@ -39,7 +39,7 @@
           <div class="payment-text">Виберіть спосіб оплати:</div>
           <div class="payment-buttons">
             <button class="payment-button" @click="selectPayment('Наложений платіж')">Наложений платіж</button>
-          <div id="container"></div>
+            <button class="payment-button" @click="handlePayment('googlepay')">Оплата картою / Google Pay</button>
           </div>
         </div>
         <p>Вибраний спосіб оплати: {{ selectedPayment }}</p>
@@ -55,23 +55,65 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script setup>
-import { inject, ref } from 'vue'
-
-
-const openGooglePay = () => {
-  window.location.href = 'https://pay.google.com/';
-}
+import { inject, ref, watch } from 'vue'
 
 const { cart } = inject('cart')
-const selectedShipping = ref(null)
-const selectedPayment = ref(null)
+const selectedShipping = ref(localStorage.getItem('selectedShipping') || null)
+const selectedPayment = ref(localStorage.getItem('selectedPayment') || null)
 
-const calculateTotalPrice = (cart) => {
-  return cart.reduce((sum, item) => sum + item.price, 0);
+const customer = ref({
+  phone: localStorage.getItem('customerPhone') || '',
+  lastName: localStorage.getItem('customerLastName') || '',
+  firstName: localStorage.getItem('customerFirstName') || ''
+})
+
+watch(cart, (newCart) => {
+  localStorage.setItem('cart', JSON.stringify(newCart));
+}, { deep: true });
+
+watch(selectedShipping, (newShipping) => {
+  localStorage.setItem('selectedShipping', newShipping);
+});
+
+watch(selectedPayment, (newPayment) => {
+  localStorage.setItem('selectedPayment', newPayment);
+});
+
+watch(customer, (newCustomer) => {
+  localStorage.setItem('customerPhone', newCustomer.phone);
+  localStorage.setItem('customerLastName', newCustomer.lastName);
+  localStorage.setItem('customerFirstName', newCustomer.firstName);
+}, { deep: true });
+
+window.addEventListener('load', () => {
+  const savedCart = JSON.parse(localStorage.getItem('cart'));
+  if (savedCart) {
+    cart.value = savedCart;
+  }
+
+  const savedShipping = localStorage.getItem('selectedShipping');
+  if (savedShipping) {
+    selectedShipping.value = savedShipping;
+  }
+
+  const savedPayment = localStorage.getItem('selectedPayment');
+  if (savedPayment) {
+    selectedPayment.value = savedPayment;
+  }
+
+  const savedCustomer = {
+    phone: localStorage.getItem('customerPhone') || '',
+    lastName: localStorage.getItem('customerLastName') || '',
+    firstName: localStorage.getItem('customerFirstName') || ''
+  };
+  customer.value = savedCustomer;
+});
+
+const calculateTotalPrice = () => {
+  return cart.value.reduce((sum, item) => sum + item.price, 0);
 }
 
 const confirmOrder = () => {
@@ -86,6 +128,16 @@ const selectPayment = (paymentMethod) => {
   selectedPayment.value = paymentMethod
 }
 
+const openGooglePay = () => {
+  window.location.href = 'https://pay.google.com/';
+}
+
+const handlePayment = (method) => {
+  if (method === 'googlepay') {
+    selectPayment('Оплата картою');
+    openGooglePay();
+  }
+}
 </script>
 
 <style scoped>
