@@ -57,17 +57,21 @@
         <div class="flex justify-center mt-4">
           <div class="footer-photo">
             <a href="https://www.instagram.com/_qutovale?igsh=MXA4bTB4a2t4OGpqOQ==" target="_blank">
-              <img src="public/4202090instagramlogosocialsocialmedia-115598_115703.png" alt="Instagram" class="w-16 h-16 object-cover rounded-full" />
+<!--              <img src="public/4202090instagramlogosocialsocialmedia-115598_115703.png" alt="Instagram" class="w-16 h-16 object-cover rounded-full" />-->
             </a>
+            <IconInstagram/>
+
           </div>
           <div class="footer-photo">
             <a href="https://t.me/Maks_neo8" target="_blank">
-              <img src="public/telegram_icon-icons.com_53603 – копія.png" alt="Telegram" class="w-16 h-16 object-cover rounded-full" />
+              <IconTelegram />
+<!--              <img src="public/telegram_icon-icons.com_53603 – копія.png" alt="Telegram" class="w-16 h-16 object-cover rounded-full" />-->
             </a>
           </div>
           <div class="footer-photo">
             <a href="https://accounts.google.com/SignOutOptions?hl=uk&continue=https://mail.google.com/mail&service=mail&ec=GBRAFw">
-              <img src="public/icons8-gmail-480.png" alt="Gmail" class="w-16 h-16 object-cover rounded-full" />
+<!--              <img src="public/icons8-gmail-480.png" alt="Gmail" class="w-16 h-16 object-cover rounded-full" />-->
+            <IconGmail/>
             </a>
           </div>
         </div>
@@ -80,8 +84,10 @@
 import { reactive, ref, computed, onMounted } from 'vue'
 import debounce from 'lodash.debounce'
 import { inject } from 'vue'
-
-const { cart, addToCart, removeFromCart } = inject('cart')
+import IconInstagram from "../../public/icon-instagram.vue";
+import IconTelegram from "../../public/icon-telegram.vue";
+import IconGmail from "../../public/icon-gmail.vue";
+const { cart, addToCart} = inject('cart')
 
 const items = ref([])
 
@@ -91,15 +97,6 @@ const filters = reactive({
 })
 
 const selectedCategory = ref('')
-
-const onClickAddPlus = (item) => {
-  if (!item.isAdded) {
-    addToCart(item)
-  } else {
-    removeFromCart(item)
-  }
-}
-
 const onChangeSelect = (event) => {
   filters.sortBy = event.target.value
 }
