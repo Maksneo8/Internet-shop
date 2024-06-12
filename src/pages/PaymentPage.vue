@@ -29,9 +29,18 @@
           <div class="shipping-buttons">
             <button class="shipping-button" @click="selectShipping('Нова Пошта')">Нова Пошта</button>
             <button class="shipping-button" @click="selectShipping('Самовивіз')">Самовивіз</button>
+            <button class="shipping-button" @click="selectShipping('Укр Пошта')">Укр Пошта</button>
           </div>
         </div>
         <p>Вибраний спосіб доставки: {{ selectedShipping }}</p>
+        <div v-if="selectedShipping === 'Нова Пошта'" class="nova-poshta-fields">
+          <input v-model="novaPoshta.address" type="text" placeholder="Адреса відділення" class="input-field" />
+          
+        </div>
+        <div v-if="selectedShipping === 'Укр Пошта'" class="ukr-poshta-fields">
+          <input v-model="ukrPoshta.address" type="text" placeholder="Адреса відділення" class="input-field" />
+
+        </div>
       </div>
 
       <div class="payment-methods-container">
@@ -47,11 +56,11 @@
 
       <div class="total-splata">
         <p class="total-text">Всього до сплати:<span class="total-price">{{ calculateTotalPrice(cart) }} грн</span></p>
-      <div class="confirm-button-container">
-        <router-link :to="{ name: 'OrderConfirmation' }">
-         <button class="confirm-button" @click="confirmOrder">Підтвердити замовлення</button>
-        </router-link>
-     </div>
+        <div class="confirm-button-container">
+          <router-link :to="{ name: 'OrderConfirmation' }">
+            <button class="confirm-button" @click="confirmOrder">Підтвердити замовлення</button>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -70,6 +79,16 @@ const customer = ref({
   firstName: localStorage.getItem('customerFirstName') || ''
 })
 
+const novaPoshta = ref({
+  address: localStorage.getItem('novaPoshtaAddress') || '',
+  trackingNumber: localStorage.getItem('novaPoshtaTrackingNumber') || ''
+})
+
+const ukrPoshta = ref({
+  address: localStorage.getItem('ukrPoshtaAddress') || '',
+  trackingNumber: localStorage.getItem('ukrPoshtaTrackingNumber') || ''
+})
+
 watch(cart, (newCart) => {
   localStorage.setItem('cart', JSON.stringify(newCart));
 }, { deep: true });
@@ -86,6 +105,16 @@ watch(customer, (newCustomer) => {
   localStorage.setItem('customerPhone', newCustomer.phone);
   localStorage.setItem('customerLastName', newCustomer.lastName);
   localStorage.setItem('customerFirstName', newCustomer.firstName);
+}, { deep: true });
+
+watch(novaPoshta, (newNovaPoshta) => {
+  localStorage.setItem('novaPoshtaAddress', newNovaPoshta.address);
+  localStorage.setItem('novaPoshtaTrackingNumber', newNovaPoshta.trackingNumber);
+}, { deep: true });
+
+watch(ukrPoshta, (newUkrPoshta) => {
+  localStorage.setItem('ukrPoshtaAddress', newUkrPoshta.address);
+  localStorage.setItem('ukrPoshtaTrackingNumber', newUkrPoshta.trackingNumber);
 }, { deep: true });
 
 window.addEventListener('load', () => {
@@ -110,6 +139,18 @@ window.addEventListener('load', () => {
     firstName: localStorage.getItem('customerFirstName') || ''
   };
   customer.value = savedCustomer;
+
+  const savedNovaPoshta = {
+    address: localStorage.getItem('novaPoshtaAddress') || '',
+    trackingNumber: localStorage.getItem('novaPoshtaTrackingNumber') || ''
+  };
+  novaPoshta.value = savedNovaPoshta;
+
+  const savedUkrPoshta = {
+    address: localStorage.getItem('ukrPoshtaAddress') || '',
+    trackingNumber: localStorage.getItem('ukrPoshtaTrackingNumber') || ''
+  };
+  ukrPoshta.value = savedUkrPoshta;
 });
 
 const calculateTotalPrice = () => {
@@ -237,7 +278,7 @@ const handlePayment = (method) => {
 }
 
 .shipping-button {
-  flex: 1; 
+  flex: 1;
   padding: 10px 20px;
   margin: 0 5px;
   font-size: 16px;
@@ -246,7 +287,12 @@ const handlePayment = (method) => {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;;
+  transition: background-color 0.3s ease;
+}
+
+.nova-poshta-fields,
+.ukr-poshta-fields {
+  margin-top: 10px;
 }
 
 .payment-methods-container {
@@ -274,9 +320,9 @@ const handlePayment = (method) => {
 }
 
 .payment-button {
-    flex: 1;
+  flex: 1;
   padding: 10px 20px;
-  margin: 0 5px; 
+  margin: 0 5px;
   font-size: 16px;
   color: #fff;
   background-color: #4caf50;
@@ -287,7 +333,7 @@ const handlePayment = (method) => {
 }
 
 .total-splata {
-text-align: center;
+  text-align: center;
   padding: 10px;
   font-weight: bold;
 }

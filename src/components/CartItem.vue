@@ -30,4 +30,4 @@ const { cart, closeDrawer } = inject('cart')
 </template>
 <style scoped>
 
-</style> 
+</style>
