@@ -29,7 +29,7 @@
 <script setup>
 import { inject } from 'vue';
 import { useRouter } from 'vue-router';
-import { defineProps, defineEmits } from 'vue';
+import { defineEmits } from 'vue';
 
 const { cart } = inject('cart');
 // const { totalPrice } = inject('totalPrice');
