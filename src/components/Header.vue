@@ -10,7 +10,6 @@
         </div>
       </div>
     </router-link>
-
     <ul class="flex items-center gap-10">
       <li @click="() => emit('openDrawer')" class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black">
         <div class="position-relative container-cart">
@@ -18,6 +17,9 @@
           <span class="position-absolute top-0 counter" v-if="cart.length > 0">{{ cart.length }}</span>
         </div>
         <b>{{ totalPrice }} грн</b>
+      </li>
+      <li v-if="authStore.userRole === 'admin'" class="flex items-center cursor-pointer gap-3 text-gray-400 hover:text-black">
+        <button @click="openAddItemPage" class="bg-black text-white px-2 py-1 rounded">+</button>
       </li>
       <li class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black" @click="openAboutPage">
         <img src="/multipleline_114207.png" alt="Menu" />
@@ -28,17 +30,24 @@
 
 <script setup>
 import { inject } from 'vue';
-import { useRouter } from 'vue-router';
 import { defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
+import {auth} from "@/stores/authStore";
+
+const authStore = auth();
 
 const { cart } = inject('cart');
-// const { totalPrice } = inject('totalPrice');
 const emit = defineEmits(['openDrawer']);
 const router = useRouter();
-
 const openAboutPage = () => {
   router.push('/about');
 };
+
+const openAddItemPage = () => {
+  router.push('/add-item');
+};
+
+const isAdmin = inject('isAdmin');
 </script>
 
 <style scoped>

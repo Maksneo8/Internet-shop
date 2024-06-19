@@ -85,6 +85,7 @@
 </template>
 <script setup>
 import { reactive, ref, computed, onMounted } from 'vue'
+import Header from "@/components/Header.vue";
 import debounce from 'lodash.debounce'
 import { inject } from 'vue'
 import { useProductStore } from '../stores/productStore';
