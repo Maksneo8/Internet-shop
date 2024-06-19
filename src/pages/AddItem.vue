@@ -90,7 +90,7 @@ const saveItem = () => {
     image: image.value
   };
   productStore.updateProduct(editedProduct);
-  resetForm(); // Очищення форми після редагування
+  resetForm();
   editing.value = false;
 };
 
