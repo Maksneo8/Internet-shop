@@ -19,7 +19,7 @@ export const useProductStore = defineStore('productStore', {
             { id: 14, category: 'phones', name: 'Телефон iPhone', description: 'Опис телефону iPhone', price: 25000, image: '/public/appleimages.png' },
             { id: 15, category: 'phones', name: 'Телефон Xiaomi', description: 'Опис телефону Xiaomi', price: 12000, image: '/public/4101012625_originalnyj-smartfon-xiaomi-800x800.png' },
             { id: 16, category: 'phones', name: 'Телефон Huawei', description: 'Опис телефону Huawei', price: 15000, image: '/public/2322233135.png' },
-            { id: 17, category: 'accessories', name: 'Аксесуар для телефону Go тримач', description: 'Опис аксесуара', price: 500, image: '/public/3157552114_w640_h640_go-derzhatel-dlya.png' },
+            { id: 17, category: 'accessories', name: 'Аксесуар для телефону Go тримач', description: 'Опис аксесуара', price: 500, image: '/public/https://github.com/Maksneo8/Internet-shop/blob/master/public/1088603_middle.png' },
             { id: 18, category: 'accessories', name: 'Чохол для телефону', description: 'Опис чохла для телефону', price: 700, image: '/public/fefeeimages.png' },
             { id: 19, category: 'accessories', name: 'Зарядний пристрій', description: 'Опис зарядного пристрою', price: 1000, image: '/public/new-kc8n9fx1tws54vq.png' },
             { id: 20, category: 'accessories', name: 'Захисне скло', description: 'Опис захисного скла', price: 300, image: '/public/zaschitnoe-steklo-6d-full-glue-dlya-iphone-12promax-black-1-1000x1000.png' },
