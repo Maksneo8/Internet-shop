@@ -23,7 +23,7 @@
     </div>
 
     <div class="flex justify-center">
-      <div class="btn-center">
+      <div class="btn-center overflow-x-auto container-btn">
         <button @click="filterCategory('notebooks')" class="btn">Ноутбуки</button>
         <button @click="filterCategory('PC')" class="btn">Комп'ютери</button>
         <button @click="filterCategory('TV')" class="btn">Телевізори</button>
@@ -230,5 +230,19 @@ footer p {
   padding: 5px;
   text-align: left;
   border-left: 1px solid #000000;
+}
+.container-btn::-webkit-scrollbar{
+  width: 2px;
+  background: #c5c4c4;
+}
+
+.container-btn::-webkit-scrollbar-track{
+  width: 2px;
+  height: 50px;
+}
+.container-btn::-webkit-scrollbar-thumb{
+  width: 20px;
+  height: 20px;
+  background: #4caf50;
 }
 </style>

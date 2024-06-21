@@ -1,6 +1,6 @@
 <template>
   <div class="payment-page">
-    <h1 class="title">Підтвердження замовлення</h1>
+    <h1 class="title">Оформлення замовлення</h1>
 
     <div v-if="cart.length === 0" class="empty-cart">
       <p>Ваш кошик порожній!</p>
